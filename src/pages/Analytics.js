@@ -8,7 +8,7 @@ import {
 
 function Analytics() {
   const [moodData, setMoodData] = useState([]);
-  const [periodData, setPeriodData] = useState([]);
+  const [, setPeriodData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalEntries: 0,
@@ -19,10 +19,8 @@ function Analytics() {
   
   const user = auth.currentUser;
   
-  // ألوان المخططات
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#ff0000'];
   
-  // ترجمة المشاعر
   const moodTranslation = {
     '😊': 'سعيدة',
     '😢': 'حزينة',
@@ -31,13 +29,79 @@ function Analytics() {
     '😰': 'قلقة'
   };
 
-  // جلب البيانات عند تحميل الصفحة
+  const getMoodValue = (mood) => {
+    const values = { '😊': 5, '😢': 2, '😠': 1, '😴': 3, '😰': 2 };
+    return values[mood] || 3;
+  };
+
+  const calculateStats = (moods, periods) => {
+    if (moods.length === 0) return;
+    
+    const totalEntries = moods.length;
+    
+    const moodCounts = {};
+    moods.forEach(m => {
+      moodCounts[m.mood] = (moodCounts[m.mood] || 0) + 1;
+    });
+    
+    let mostCommonMood = '😊';
+    let maxCount = 0;
+    Object.entries(moodCounts).forEach(([mood, count]) => {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommonMood = mood;
+      }
+    });
+    
+    const totalMood = moods.reduce((sum, m) => sum + getMoodValue(m.mood), 0);
+    const averageMood = (totalMood / moods.length).toFixed(1);
+    
+    const moodByPeriod = {
+      'قبل الدورة': 0,
+      'أثناء الدورة': 0,
+      'بعد الدورة': 0
+    };
+    
+    if (periods.length > 0) {
+      moods.forEach(mood => {
+        const moodDate = mood.date;
+        
+        let periodPhase = 'بعد الدورة';
+        for (let i = 0; i < periods.length; i++) {
+          const period = periods[i];
+          const periodStart = period.startDate;
+          const periodEnd = new Date(periodStart);
+          periodEnd.setDate(periodEnd.getDate() + (period.periodLength || 5));
+          
+          const prePeriodStart = new Date(periodStart);
+          prePeriodStart.setDate(prePeriodStart.getDate() - 7);
+          
+          if (moodDate >= prePeriodStart && moodDate < periodStart) {
+            periodPhase = 'قبل الدورة';
+            break;
+          } else if (moodDate >= periodStart && moodDate <= periodEnd) {
+            periodPhase = 'أثناء الدورة';
+            break;
+          }
+        }
+        
+        moodByPeriod[periodPhase] += getMoodValue(mood.mood);
+      });
+    }
+    
+    setStats({
+      totalEntries,
+      mostCommonMood: moodTranslation[mostCommonMood] || mostCommonMood,
+      averageMood,
+      moodByPeriod
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!user) return;
       
       try {
-        // جلب بيانات المزاج
         const moodsQuery = query(
           collection(db, 'moods'),
           where('userId', '==', user.uid),
@@ -56,7 +120,6 @@ function Analytics() {
         });
         setMoodData(moods);
         
-        // جلب بيانات الدورة الشهرية
         const periodsQuery = query(
           collection(db, 'periods'),
           where('userId', '==', user.uid),
@@ -74,7 +137,6 @@ function Analytics() {
         });
         setPeriodData(periods);
         
-        // حساب الإحصائيات
         calculateStats(moods, periods);
         
       } catch (error) {
@@ -86,91 +148,13 @@ function Analytics() {
     
     fetchData();
   }, [user]);
-  
-  // دالة لتحويل المشاعر إلى أرقام
-  const getMoodValue = (mood) => {
-    const values = { '😊': 5, '😢': 2, '😠': 1, '😴': 3, '😰': 2 };
-    return values[mood] || 3;
-  };
-  
-  // حساب الإحصائيات
-  const calculateStats = (moods, periods) => {
-    if (moods.length === 0) return;
-    
-    // إجمالي عدد الإدخالات
-    const totalEntries = moods.length;
-    
-    // أكثر مزاج تكرر
-    const moodCounts = {};
-    moods.forEach(m => {
-      moodCounts[m.mood] = (moodCounts[m.mood] || 0) + 1;
-    });
-    
-    let mostCommonMood = '😊';
-    let maxCount = 0;
-    Object.entries(moodCounts).forEach(([mood, count]) => {
-      if (count > maxCount) {
-        maxCount = count;
-        mostCommonMood = mood;
-      }
-    });
-    
-    // متوسط المزاج
-    const totalMood = moods.reduce((sum, m) => sum + m.moodValue, 0);
-    const averageMood = (totalMood / moods.length).toFixed(1);
-    
-    // تحليل المزاج حسب مرحلة الدورة
-    const moodByPeriod = {
-      'قبل الدورة': 0,
-      'أثناء الدورة': 0,
-      'بعد الدورة': 0
-    };
-    
-    if (periods.length > 0) {
-      moods.forEach(mood => {
-        const moodDate = mood.date;
-        
-        // البحث عن أقرب دورة لهذا التاريخ
-        let periodPhase = 'بعد الدورة';
-        for (let i = 0; i < periods.length; i++) {
-          const period = periods[i];
-          const periodStart = period.startDate;
-          const periodEnd = new Date(periodStart);
-          periodEnd.setDate(periodEnd.getDate() + (period.periodLength || 5));
-          
-          // قبل الدورة (7 أيام قبل بدايتها)
-          const prePeriodStart = new Date(periodStart);
-          prePeriodStart.setDate(prePeriodStart.getDate() - 7);
-          
-          if (moodDate >= prePeriodStart && moodDate < periodStart) {
-            periodPhase = 'قبل الدورة';
-            break;
-          } else if (moodDate >= periodStart && moodDate <= periodEnd) {
-            periodPhase = 'أثناء الدورة';
-            break;
-          }
-        }
-        
-        moodByPeriod[periodPhase] += mood.moodValue;
-      });
-    }
-    
-    setStats({
-      totalEntries,
-      mostCommonMood: moodTranslation[mostCommonMood] || mostCommonMood,
-      averageMood,
-      moodByPeriod
-    });
-  };
-  
-  // تحضير بيانات المخطط الخطي
+
   const lineChartData = moodData.map(m => ({
     name: m.date.toLocaleDateString('ar-EG', { day: 'numeric', month: 'short' }),
     value: m.moodValue,
     mood: m.mood
   }));
-  
-  // تحضير بيانات المخطط الدائري
+
   const pieChartData = Object.entries(
     moodData.reduce((acc, m) => {
       acc[m.mood] = (acc[m.mood] || 0) + 1;
@@ -181,7 +165,7 @@ function Analytics() {
     value: count,
     mood
   }));
-  
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-200 pt-20 p-8 flex items-center justify-center">
@@ -192,7 +176,7 @@ function Analytics() {
       </div>
     );
   }
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-200 pt-20 p-8">
       <div className="max-w-6xl mx-auto">
@@ -218,7 +202,6 @@ function Analytics() {
           </div>
         ) : (
           <>
-            {/* بطاقات الإحصائيات السريعة */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="bg-white rounded-xl p-6 shadow-lg text-center">
                 <div className="text-3xl mb-2">📝</div>
@@ -239,7 +222,6 @@ function Analytics() {
               </div>
             </div>
             
-            {/* المخطط الخطي - تطور المزاج */}
             <div className="bg-white rounded-2xl p-8 shadow-xl mb-8">
               <h2 className="text-2xl font-bold text-purple-700 mb-6">تطور المزاج عبر الوقت</h2>
               <div className="h-80">
@@ -264,7 +246,6 @@ function Analytics() {
               </div>
             </div>
             
-            {/* المخطط الدائري - توزيع المشاعر */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-white rounded-2xl p-8 shadow-xl">
                 <h2 className="text-2xl font-bold text-purple-700 mb-6">توزيع المشاعر</h2>
@@ -291,7 +272,6 @@ function Analytics() {
                 </div>
               </div>
               
-              {/* المخطط الشريطي - المزاج حسب مرحلة الدورة */}
               <div className="bg-white rounded-2xl p-8 shadow-xl">
                 <h2 className="text-2xl font-bold text-purple-700 mb-6">المزاج حسب مرحلة الدورة</h2>
                 <div className="h-64">
@@ -317,7 +297,6 @@ function Analytics() {
               </div>
             </div>
             
-            {/* جدول التسجيلات الأخيرة */}
             <div className="bg-white rounded-2xl p-8 shadow-xl mt-8">
               <h2 className="text-2xl font-bold text-purple-700 mb-6">آخر التسجيلات</h2>
               <div className="overflow-x-auto">
