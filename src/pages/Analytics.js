@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { auth, db } from '../services/firebase';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -8,13 +8,12 @@ import {
 
 function Analytics() {
   const [moodData, setMoodData] = useState([]);
-  const [, setPeriodData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalEntries: 0,
     mostCommonMood: '',
     averageMood: 0,
-    moodByPeriod: {}
+    moodByPeriod: { 'قبل الدورة': 0, 'أثناء الدورة': 0, 'بعد الدورة': 0 }
   });
   
   const user = auth.currentUser;
@@ -34,7 +33,7 @@ function Analytics() {
     return values[mood] || 3;
   };
 
-  const calculateStats = (moods, periods) => {
+  const calculateStats = (moods) => {
     if (moods.length === 0) return;
     
     const totalEntries = moods.length;
@@ -56,56 +55,27 @@ function Analytics() {
     const totalMood = moods.reduce((sum, m) => sum + getMoodValue(m.mood), 0);
     const averageMood = (totalMood / moods.length).toFixed(1);
     
-    const moodByPeriod = {
-      'قبل الدورة': 0,
-      'أثناء الدورة': 0,
-      'بعد الدورة': 0
-    };
-    
-    if (periods.length > 0) {
-      moods.forEach(mood => {
-        const moodDate = mood.date;
-        
-        let periodPhase = 'بعد الدورة';
-        for (let i = 0; i < periods.length; i++) {
-          const period = periods[i];
-          const periodStart = period.startDate;
-          const periodEnd = new Date(periodStart);
-          periodEnd.setDate(periodEnd.getDate() + (period.periodLength || 5));
-          
-          const prePeriodStart = new Date(periodStart);
-          prePeriodStart.setDate(prePeriodStart.getDate() - 7);
-          
-          if (moodDate >= prePeriodStart && moodDate < periodStart) {
-            periodPhase = 'قبل الدورة';
-            break;
-          } else if (moodDate >= periodStart && moodDate <= periodEnd) {
-            periodPhase = 'أثناء الدورة';
-            break;
-          }
-        }
-        
-        moodByPeriod[periodPhase] += getMoodValue(mood.mood);
-      });
-    }
-    
     setStats({
       totalEntries,
       mostCommonMood: moodTranslation[mostCommonMood] || mostCommonMood,
       averageMood,
-      moodByPeriod
+      moodByPeriod: { 'قبل الدورة': 0, 'أثناء الدورة': 0, 'بعد الدورة': 0 }
     });
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
       
       try {
         const moodsQuery = query(
           collection(db, 'moods'),
           where('userId', '==', user.uid),
-          orderBy('date', 'asc')
+          orderBy('date', 'desc'),
+          limit(50)
         );
         
         const moodsSnapshot = await getDocs(moodsQuery);
@@ -114,30 +84,13 @@ function Analytics() {
           const data = doc.data();
           moods.push({
             ...data,
-            date: data.date.toDate(),
+            date: data.date?.toDate() || new Date(),
             moodValue: getMoodValue(data.mood)
           });
         });
-        setMoodData(moods);
         
-        const periodsQuery = query(
-          collection(db, 'periods'),
-          where('userId', '==', user.uid),
-          orderBy('startDate', 'asc')
-        );
-        
-        const periodsSnapshot = await getDocs(periodsQuery);
-        const periods = [];
-        periodsSnapshot.forEach((doc) => {
-          const data = doc.data();
-          periods.push({
-            ...data,
-            startDate: data.startDate.toDate()
-          });
-        });
-        setPeriodData(periods);
-        
-        calculateStats(moods, periods);
+        setMoodData(moods.reverse());
+        calculateStats(moods);
         
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -273,55 +226,27 @@ function Analytics() {
               </div>
               
               <div className="bg-white rounded-2xl p-8 shadow-xl">
-                <h2 className="text-2xl font-bold text-purple-700 mb-6">المزاج حسب مرحلة الدورة</h2>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={[
-                        { name: 'قبل الدورة', value: stats.moodByPeriod['قبل الدورة'] || 0 },
-                        { name: 'أثناء الدورة', value: stats.moodByPeriod['أثناء الدورة'] || 0 },
-                        { name: 'بعد الدورة', value: stats.moodByPeriod['بعد الدورة'] || 0 }
-                      ]}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#8884d8" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <p className="text-sm text-gray-500 mt-4 text-center">
-                  * تظهر هذه الإحصائية عند وجود بيانات كافية عن الدورة الشهرية
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-xl mt-8">
-              <h2 className="text-2xl font-bold text-purple-700 mb-6">آخر التسجيلات</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-purple-50">
-                    <tr>
-                      <th className="px-4 py-3 text-right text-purple-800">التاريخ</th>
-                      <th className="px-4 py-3 text-right text-purple-800">المزاج</th>
-                      <th className="px-4 py-3 text-right text-purple-800">ملاحظة</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {moodData.slice(-5).reverse().map((mood, index) => (
-                      <tr key={index} className="border-b border-gray-200">
-                        <td className="px-4 py-3">
-                          {mood.date.toLocaleDateString('ar-EG')}
-                        </td>
-                        <td className="px-4 py-3 text-2xl">{mood.mood}</td>
-                        <td className="px-4 py-3 text-gray-600">
-                          {mood.note || '-'}
-                        </td>
+                <h2 className="text-2xl font-bold text-purple-700 mb-6">آخر التسجيلات</h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-purple-50">
+                      <tr>
+                        <th className="px-4 py-3 text-right text-purple-800">التاريخ</th>
+                        <th className="px-4 py-3 text-right text-purple-800">المزاج</th>
+                        <th className="px-4 py-3 text-right text-purple-800">ملاحظة</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {moodData.slice(-5).reverse().map((mood, index) => (
+                        <tr key={index} className="border-b border-gray-200">
+                          <td className="px-4 py-3">{mood.date.toLocaleDateString('ar-EG')}</td>
+                          <td className="px-4 py-3 text-2xl">{mood.mood}</td>
+                          <td className="px-4 py-3 text-gray-600">{mood.note || '-'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </>
