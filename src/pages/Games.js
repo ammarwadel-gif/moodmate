@@ -2,54 +2,57 @@ function Games() {
   const games = [
     {
       name: '🧠 لعبة الذاكرة',
-      description: 'اختاري البطاقات المتطابقة',
+      description: 'اختاري البطاقات المتطابقة - لعبة ممتعة لتقوية الذاكرة',
       icon: '🧠',
       url: 'https://www.memozor.com/ar/memory-games'
     },
     {
-      name: '🎨 تلوين للأطفال',
-      description: 'استرخي مع التلوين',
+      name: '🎨 تلوين ماندالا',
+      description: 'استرخي مع التلوين - ألوان جميلة تهدئ الأعصاب',
       icon: '🎨',
-      url: 'https://www.coloring.ws/arabic.htm'
+      url: 'https://www.supercoloring.com/ar/categories/mandala'
     },
     {
-      name: '🧩 سودوكو',
-      description: 'لعبة أرقام للتركيز',
+      name: '🧩 ألغاز ذكاء',
+      description: 'اختبر ذكائك مع هذه الألغاز المسلية',
       icon: '🧩',
-      url: 'https://www.arabic-sudoku.com/'
+      url: 'https://www.arabic-riddles.com/'
     },
     {
-      name: '😊 ألغاز مضحكة',
-      description: 'تحدي عقلك مع الألغاز',
-      icon: '😄',
-      url: 'https://www.arabic-lang.org/riddles/'
+      name: '😊 ألعاب تركيز',
+      description: 'ألعاب بسيطة لتحسين التركيز والانتباه',
+      icon: '😊',
+      url: 'https://www.crazygames.com/ar/t/2-player'
     }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-200 pt-20 p-8">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-purple-800 mb-8">🎮 ألعاب للاسترخاء</h1>
+        <h1 className="text-4xl font-bold text-center text-purple-800 mb-4">🎮 ألعاب للاسترخاء</h1>
+        <p className="text-center text-gray-700 mb-8">خذي استراحة واستمتعي بهذه الألعاب المجانية</p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {games.map((game, index) => (
             <a 
               key={index}
               href={game.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition text-center block"
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition duration-300 text-center group cursor-pointer"
             >
-              <div className="text-6xl mb-4">{game.icon}</div>
+              <div className="text-7xl mb-4 group-hover:scale-110 transition">{game.icon}</div>
               <h2 className="text-xl font-bold text-purple-700 mb-2">{game.name}</h2>
-              <p className="text-gray-600">{game.description}</p>
-              <div className="mt-4 text-purple-600">اضغطي للعب →</div>
+              <p className="text-gray-600 text-sm mb-4">{game.description}</p>
+              <span className="inline-block bg-purple-600 text-white px-4 py-2 rounded-lg group-hover:bg-purple-700 transition">
+                ابدأ اللعب 🎮
+              </span>
             </a>
           ))}
         </div>
         
-        <div className="mt-8 bg-white/50 rounded-2xl p-4 text-center">
-          <p>✨ كل هذه الألعاب مجانية وآمنة</p>
+        <div className="mt-8 bg-white/50 backdrop-blur-sm rounded-2xl p-4 text-center">
+          <p className="text-purple-700">✨ الألعاب تساعد على تقليل التوتر وتحسين المزاج ✨</p>
         </div>
       </div>
     </div>
