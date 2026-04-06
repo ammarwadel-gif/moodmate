@@ -30,31 +30,30 @@ function Resources() {
   // ========== الفيديوهات من Vimeo (مضمونة 100%، بدون إعلانات، بدون أخطاء CORS) ==========
   const videos = [
   {
-    title: '🌊 شاطئ البحر - استرخاء',
-    description: 'أمواج البحر الهادئة للاسترخاء والتأمل',
-    url: 'https://player.vimeo.com/video/201789827',
+    title: '🌊 موسيقى هادئة للاسترخاء',
+    description: 'موسيقى هادئة تساعد على الاسترخاء وتصفية الذهن',
+    url: 'https://res.cloudinary.com/demo/video/upload/v1624567890/relaxing_ocean_waves.mp4',
     duration: 'دقيقة'
   },
   {
-    title: '🌿 غابة خضراء - طبيعة هادئة',
-    description: 'مناظر طبيعية خضراء مع أصوات الطيور',
-    url: 'https://player.vimeo.com/video/347119567',
-    duration: 'دقيقتين'
-  },
-  {
-    title: '🏔️ جبال وسحاب - تأمل',
-    description: 'مناظر جبلية خلابة مع موسيقى هادئة',
-    url: 'https://player.vimeo.com/video/347130241',
+    title: '🌿 أصوات الطبيعة - غابة',
+    description: 'أصوات طبيعية من الغابة للاسترخاء والتأمل',
+    url: 'https://res.cloudinary.com/demo/video/upload/v1624567891/forest_sounds.mp4',
     duration: 'دقيقة'
   },
   {
-    title: '🌅 غروب الشمس - راحة نفسية',
-    description: 'منظر غروب الشمس الهادئ مع موسيقى هادئة',
-    url: 'https://player.vimeo.com/video/347119568',
-    duration: 'دقيقتين'
+    title: '🔥 صوت المدفأة - دفء وراحة',
+    description: 'صوت المدفأة الخشبية الدافئة للراحة النفسية',
+    url: 'https://res.cloudinary.com/demo/video/upload/v1624567892/fireplace_sounds.mp4',
+    duration: 'دقيقة'
+  },
+  {
+    title: '🌧️ صوت المطر - نوم عميق',
+    description: 'صوت المطر الهادئ للنوم العميق والاسترخاء',
+    url: 'https://res.cloudinary.com/demo/video/upload/v1624567893/rain_sounds.mp4',
+    duration: 'دقيقة'
   }
 ];
-  
   // ========== أرقام الدعم النفسي ==========
   const supportLines = [
     { country: '🇪🇬 مصر', number: '16328', organization: 'خط الدعم النفسي - وزارة الصحة', hours: '24 ساعة' },
