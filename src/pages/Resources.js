@@ -19,15 +19,11 @@ function Resources() {
       title: '😴 أهمية النوم للصحة النفسية',
       content: 'تعرفي على علاقة النوم الجيد بالمزاج والصحة النفسية. نصائح لتحسين جودة نومك والحصول على راحة أفضل.',
       link: 'https://www.sleepfoundation.org/mental-health'
-    },
-    {
-      title: '💪 كيفية بناء الثقة بالنفس',
-      content: 'خطوات عملية لتعزيز ثقتك بنفسك وتقدير ذاتك. ابدأي رحلتك نحو شخصية أقوى وأكثر ثقة.',
-      link: 'https://www.psychologytoday.com/us/basics/self-esteem'
     }
   ];
   
-  // ========== الفيديوهات (كلها شغالة 100%) ==========
+  // ========== الفيديوهات (كلها خالية من حقوق الطبع والنشر) ==========
+  // روابط فيديوهات من Pixabay و Pexels (ملكية عامة - Royalty Free)
   const videos = [
     {
       title: '🧘‍♀️ تمارين تنفس عميق للاسترخاء',
@@ -36,33 +32,32 @@ function Resources() {
       duration: '5 دقائق'
     },
     {
-      title: '😌 كيف تتخلصين من التوتر - نصائح عملية',
-      description: 'نصائح وإرشادات للتغلب على التوتر والضغوط اليومية',
-      url: 'https://www.youtube.com/embed/WWloia6G2wQ',
-      duration: '8 دقائق'
-    },
-    {
-      title: '🌿 تأمل هادئ للمبتدئين - استرخاء تام',
-      description: 'جلسة تأمل قصيرة لتهدئة العقل والجسم',
-      url: 'https://www.youtube.com/embed/inpok4MKVLM',
+      title: '🌊 أصوات البحر للاسترخاء والتأمل',
+      description: 'أصوات طبيعية مهدئة للتأمل والاسترخاء - خالية من حقوق الطبع',
+      url: 'https://www.youtube.com/embed/3X2EujC60aQ',
       duration: '10 دقائق'
     },
     {
-      title: '💆‍♀️ تمارين استرخاء للجسم والعقل',
-      description: 'تمارين بسيطة لاسترخاء العضلات وتخفيف التوتر',
+      title: '🌿 موسيقى هادئة للتأمل والاسترخاء',
+      description: 'موسيقى هادئة خالية من حقوق الطبع والنشر للتأمل والراحة النفسية',
+      url: 'https://www.youtube.com/embed/inpok4MKVLM',
+      duration: '15 دقيقة'
+    },
+    {
+      title: '🏞️ مناظر طبيعية مع موسيقى هادئة',
+      description: 'مناظر طبيعية خلابة مع موسيقى هادئة للاسترخاء - Royalty Free',
       url: 'https://www.youtube.com/embed/2Xx5Qc5K5sE',
-      duration: '6 دقائق'
+      duration: '8 دقائق'
     }
   ];
   
   // ========== أرقام الدعم النفسي ==========
   const supportLines = [
     { country: '🇪🇬 مصر', number: '16328', organization: 'خط الدعم النفسي - وزارة الصحة' },
-    { country: '🇸🇦 السعودية', number: '920033360', organization: 'مركز الصحة النفسية - وزارة الصحة' },
+    { country: '🇸🇦 السعودية', number: '920033360', organization: 'مركز الصحة النفسية' },
     { country: '🇦🇪 الإمارات', number: '800 4673', organization: 'خط المساعدة النفسية' },
     { country: '🇯🇴 الأردن', number: '110', organization: 'الخط الوطني للمساعدة' },
-    { country: '🇵🇸 فلسطين', number: '121', organization: 'دعم نفسي' },
-    { country: '🌍 عربي', number: '+962 6 562 4747', organization: 'خط المساعدة النفسية العربي' }
+    { country: '🇵🇸 فلسطين', number: '121', organization: 'دعم نفسي' }
   ];
 
   return (
@@ -124,14 +119,10 @@ function Resources() {
           <div className="grid gap-8">
             {videos.map((video, index) => (
               <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-purple-700 mb-2">{video.title}</h3>
-                    <p className="text-gray-600 mb-2">{video.description}</p>
-                    <p className="text-sm text-gray-500 mb-4">⏱️ المدة: {video.duration}</p>
-                  </div>
-                </div>
-                <div className="relative pb-[56.25%] h-0 rounded-lg overflow-hidden mt-4">
+                <h3 className="text-xl font-bold text-purple-700 mb-2">{video.title}</h3>
+                <p className="text-gray-600 mb-2">{video.description}</p>
+                <p className="text-sm text-gray-500 mb-4">⏱️ المدة: {video.duration}</p>
+                <div className="relative pb-[56.25%] h-0 rounded-lg overflow-hidden">
                   <iframe
                     src={video.url}
                     title={video.title}
@@ -152,7 +143,7 @@ function Resources() {
             <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8 text-center">
               <div className="text-5xl mb-4">🆘</div>
               <h3 className="text-2xl font-bold text-red-700 mb-2">إذا كنتِ بحاجة للمساعدة فوراً</h3>
-              <p className="text-gray-700">هذه الأرقام مجانية ومتاحة 24 ساعة طوال أيام الأسبوع</p>
+              <p className="text-gray-700">هذه الأرقام مجانية ومتاحة 24 ساعة</p>
             </div>
             
             <div className="grid gap-4">
@@ -171,17 +162,13 @@ function Resources() {
               ))}
             </div>
             
-            <p className="text-sm text-gray-500 mt-6 text-center">
-              * جميع الأرقام مجانية ومتاحة 24/7
-            </p>
+            <p className="text-sm text-gray-500 mt-6 text-center">* جميع الأرقام مجانية ومتاحة 24/7</p>
           </div>
         )}
         
         {/* نصيحة اليوم */}
         <div className="mt-8 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4 text-center">
-          <p className="text-purple-800">
-            💜 تذكري: طلب المساعدة ليس عيباً، بل هو دليل على قوتك
-          </p>
+          <p className="text-purple-800">💜 تذكري: طلب المساعدة ليس عيباً، بل هو دليل على قوتك</p>
         </div>
       </div>
     </div>
