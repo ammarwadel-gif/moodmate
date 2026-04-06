@@ -27,47 +27,49 @@ function Resources() {
     }
   ];
   
-  // ========== الفيديوهات من Vimeo (مضمونة 100%، بدون إعلانات، بدون أخطاء CORS) ==========
   // ========== تمارين تنفس بدلاً من الفيديوهات ==========
-const breathingExercises = [
-  {
-    title: '🌬️ تمرين التنفس 4-7-8',
-    description: 'استنشقي لمدة 4 ثواني، احبسي النفس 7 ثواني، أخرجي النفس ببطء لمدة 8 ثواني',
-    icon: '🌬️',
-    steps: ['استنشقي 4 ثواني', 'احبسي 7 ثواني', 'ازفري 8 ثواني'],
-    duration: '2 دقائق'
-  },
-  {
-    title: '🧘 تمرين التنفس البطني',
-    description: 'ضعي يدك على بطنك وتنفسي بعمق، اشعري ببطنك يرتفع وينخفض',
-    icon: '🧘',
-    steps: ['اجلسي بوضع مريح', 'ضعي يدك على بطنك', 'تنفسي بعمق 10 مرات'],
-    duration: '3 دقائق'
-  },
-  {
-    title: '💨 تمرين الزفير الطويل',
-    description: 'شهيق سريع لمدة ثانيتين، ثم زفير بطيء لمدة 6 ثواني - يساعد على تهدئة القلق',
-    icon: '💨',
-    steps: ['شهيق سريع (ثانيتين)', 'زفير بطيء (6 ثواني)', 'كرري 8 مرات'],
-    duration: '2 دقائق'
-  },
-  {
-    title: '🌸 تمرين التنفس المربع',
-    description: 'استنشاق 4 ثواني - حبس 4 ثواني - زفير 4 ثواني - توقف 4 ثواني، ثم كرري',
-    icon: '🌸',
-    steps: ['استنشاق 4 ثواني', 'حبس النفس 4 ثواني', 'زفير 4 ثواني', 'توقف 4 ثواني'],
-    duration: '3 دقائق'
-  }
-];
-
-// ========== نصائح سريعة للصحة النفسية ==========
-const quickTips = [
-  '🌟 خذي 5 دقائق يومياً للتنفس العميق',
-  '📝 دوّني مشاعرك يومياً في مفكرة',
-  '💧 اشربي كوب ماء عند الشعور بالتوتر',
-  '🚶 امشي 10 دقائق يومياً في الهواء الطلق',
-  '😊 ابتسمي حتى لو كنتِ حزينة - الابتسامة تخدع الدماغ فيشعر بالسعادة'
-];
+  const breathingExercises = [
+    {
+      title: '🌬️ تمرين التنفس 4-7-8',
+      description: 'استنشقي لمدة 4 ثواني، احبسي النفس 7 ثواني، أخرجي النفس ببطء لمدة 8 ثواني',
+      icon: '🌬️',
+      steps: ['استنشقي 4 ثواني', 'احبسي 7 ثواني', 'ازفري 8 ثواني'],
+      duration: '2 دقائق'
+    },
+    {
+      title: '🧘 تمرين التنفس البطني',
+      description: 'ضعي يدك على بطنك وتنفسي بعمق، اشعري ببطنك يرتفع وينخفض',
+      icon: '🧘',
+      steps: ['اجلسي بوضع مريح', 'ضعي يدك على بطنك', 'تنفسي بعمق 10 مرات'],
+      duration: '3 دقائق'
+    },
+    {
+      title: '💨 تمرين الزفير الطويل',
+      description: 'شهيق سريع لمدة ثانيتين، ثم زفير بطيء لمدة 6 ثواني - يساعد على تهدئة القلق',
+      icon: '💨',
+      steps: ['شهيق سريع (ثانيتين)', 'زفير بطيء (6 ثواني)', 'كرري 8 مرات'],
+      duration: '2 دقائق'
+    },
+    {
+      title: '🌸 تمرين التنفس المربع',
+      description: 'استنشاق 4 ثواني - حبس 4 ثواني - زفير 4 ثواني - توقف 4 ثواني، ثم كرري',
+      icon: '🌸',
+      steps: ['استنشاق 4 ثواني', 'حبس النفس 4 ثواني', 'زفير 4 ثواني', 'توقف 4 ثواني'],
+      duration: '3 دقائق'
+    }
+  ];
+  
+  // ========== نصائح سريعة للصحة النفسية ==========
+  const quickTips = [
+    '🌟 خذي 5 دقائق يومياً للتنفس العميق',
+    '📝 دوّني مشاعرك يومياً في مفكرة',
+    '💧 اشربي كوب ماء عند الشعور بالتوتر',
+    '🚶 امشي 10 دقائق يومياً في الهواء الطلق',
+    '😊 ابتسمي حتى لو كنتِ حزينة - الابتسامة تخدع الدماغ فيشعر بالسعادة',
+    '📱 ابتعدي عن الشاشات قبل النوم بساعة',
+    '🎧 استمعي لموسيقى هادئة عند الشعور بالتوتر'
+  ];
+  
   // ========== أرقام الدعم النفسي ==========
   const supportLines = [
     { country: '🇪🇬 مصر', number: '16328', organization: 'خط الدعم النفسي - وزارة الصحة', hours: '24 ساعة' },
@@ -97,14 +99,24 @@ const quickTips = [
             📝 مقالات
           </button>
           <button 
-            onClick={() => setActiveTab('videos')} 
+            onClick={() => setActiveTab('breathing')} 
             className={`px-6 py-3 rounded-xl font-bold transition duration-200 ${
-              activeTab === 'videos' 
+              activeTab === 'breathing' 
                 ? 'bg-purple-600 text-white shadow-lg' 
                 : 'bg-white text-gray-600 hover:bg-purple-100'
             }`}
           >
-            🎥 فيديوهات
+            🌬️ تمارين التنفس
+          </button>
+          <button 
+            onClick={() => setActiveTab('tips')} 
+            className={`px-6 py-3 rounded-xl font-bold transition duration-200 ${
+              activeTab === 'tips' 
+                ? 'bg-purple-600 text-white shadow-lg' 
+                : 'bg-white text-gray-600 hover:bg-purple-100'
+            }`}
+          >
+            💡 نصائح سريعة
           </button>
           <button 
             onClick={() => setActiveTab('support')} 
@@ -138,30 +150,59 @@ const quickTips = [
           </div>
         )}
         
-        {/* ========== قسم الفيديوهات ========== */}
-        {activeTab === 'videos' && (
-          <div className="grid gap-8">
-            {videos.map((video, index) => (
+        {/* ========== قسم تمارين التنفس ========== */}
+        {activeTab === 'breathing' && (
+          <div className="grid gap-6">
+            {breathingExercises.map((exercise, index) => (
               <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-purple-700 mb-2">{video.title}</h3>
-                    <p className="text-gray-600 mb-2">{video.description}</p>
-                    <p className="text-sm text-gray-500">⏱️ المدة: {video.duration}</p>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="text-5xl">{exercise.icon}</div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-purple-700">{exercise.title}</h3>
+                    <p className="text-gray-500 text-sm">⏱️ {exercise.duration}</p>
                   </div>
                 </div>
-                <div className="relative pb-[56.25%] h-0 rounded-lg overflow-hidden">
-                  <iframe
-                    src={video.url}
-                    title={video.title}
-                    className="absolute top-0 left-0 w-full h-full"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                <p className="text-gray-700 mb-4">{exercise.description}</p>
+                <div className="bg-purple-50 rounded-xl p-4">
+                  <p className="font-semibold text-purple-800 mb-2">📋 الخطوات:</p>
+                  <ul className="space-y-2">
+                    {exercise.steps.map((step, i) => (
+                      <li key={i} className="flex items-center gap-2 text-gray-700">
+                        <span className="text-purple-500">•</span>
+                        {step}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+                <button 
+                  onClick={() => {
+                    // مؤقت بسيط للتمرين
+                    alert(`🧘 ابدئي تمرين ${exercise.title}\n\nاتبعي الخطوات: ${exercise.steps.join(' → ')}\n\n${exercise.duration}`);
+                  }}
+                  className="mt-4 w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition font-semibold"
+                >
+                  ابدئي التمرين 🧘
+                </button>
               </div>
             ))}
+          </div>
+        )}
+        
+        {/* ========== قسم النصائح السريعة ========== */}
+        {activeTab === 'tips' && (
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <h2 className="text-2xl font-bold text-purple-700 mb-6 text-center">✨ نصائح سريعة لصحتك النفسية</h2>
+            <div className="grid gap-4">
+              {quickTips.map((tip, index) => (
+                <div key={index} className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 flex items-center gap-3">
+                  <span className="text-2xl">💜</span>
+                  <p className="text-gray-800">{tip}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center text-gray-500 text-sm">
+              <p>🌟 جربي تطبيق نصيحة واحدة يومياً وستلاحظين الفرق</p>
+            </div>
           </div>
         )}
         
