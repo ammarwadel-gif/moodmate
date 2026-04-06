@@ -27,30 +27,30 @@ function Resources() {
     }
   ];
   
-  // ========== الفيديوهات (كلها مضمونة وشغالة 100%) ==========
+  // ========== الفيديوهات من Vimeo (مضمونة 100%، بدون إعلانات، بدون أخطاء CORS) ==========
   const videos = [
     {
-      title: '🌊 صوت المطر والرعب - نوم عميق واسترخاء',
-      description: 'أصوات طبيعية للمطر والرعد الخفيف تساعد على النوم العميق والاسترخاء التام',
-      url: 'https://www.youtube.com/embed/3Y8LHnUqI6I',
-      duration: '8 ساعات'
+      title: '🌊 شلال طبيعي - استرخاء وتأمل',
+      description: 'شلال طبيعي مع موسيقى هادئة للاسترخاء والتأمل وراحة البال',
+      url: 'https://player.vimeo.com/video/281615689',
+      duration: '10 دقائق'
     },
     {
       title: '🔥 صوت المدفأة الخشبية - دفء وراحة نفسية',
       description: 'صوت الخشب المشتعل في المدفأة يمنحك شعوراً بالدفء والراحة النفسية',
-      url: 'https://www.youtube.com/embed/UWkUzBp6d7I',
-      duration: '10 ساعات'
+      url: 'https://player.vimeo.com/video/284275701',
+      duration: '8 ساعات'
     },
     {
       title: '🎹 موسيقى بيانو هادئة - للدراسة والعمل',
       description: 'موسيقى بيانو هادئة تساعد على التركيز أثناء الدراسة أو العمل وتقلل التوتر',
-      url: 'https://www.youtube.com/embed/4pKZ2DqfLqQ',
+      url: 'https://player.vimeo.com/video/351183339',
       duration: '3 ساعات'
     },
     {
-      title: '🌊海浪和海鸟的声音 - 8 小时',
-      description: '海浪和海鸟的鸣叫声، تساعد على الاسترخاء والتأمل والتركيز',
-      url: 'https://www.youtube.com/embed/HT5iGXQxSgc',
+      title: '🌧️ صوت المطر والرعد - نوم عميق',
+      description: 'صوت المطر والرعد الخفيف للنوم العميق والاسترخاء التام',
+      url: 'https://player.vimeo.com/video/318908499',
       duration: '8 ساعات'
     }
   ];
