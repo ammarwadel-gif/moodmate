@@ -29,31 +29,31 @@ function Resources() {
   
   // ========== الفيديوهات من Vimeo (مضمونة 100%، بدون إعلانات، بدون أخطاء CORS) ==========
   const videos = [
-    {
-      title: '🌊 شلال طبيعي - استرخاء وتأمل',
-      description: 'شلال طبيعي مع موسيقى هادئة للاسترخاء والتأمل وراحة البال',
-      url: 'https://player.vimeo.com/video/281615689',
-      duration: '10 دقائق'
-    },
-    {
-      title: '🔥 صوت المدفأة الخشبية - دفء وراحة نفسية',
-      description: 'صوت الخشب المشتعل في المدفأة يمنحك شعوراً بالدفء والراحة النفسية',
-      url: 'https://player.vimeo.com/video/284275701',
-      duration: '8 ساعات'
-    },
-    {
-      title: '🎹 موسيقى بيانو هادئة - للدراسة والعمل',
-      description: 'موسيقى بيانو هادئة تساعد على التركيز أثناء الدراسة أو العمل وتقلل التوتر',
-      url: 'https://player.vimeo.com/video/351183339',
-      duration: '3 ساعات'
-    },
-    {
-      title: '🌧️ صوت المطر والرعد - نوم عميق',
-      description: 'صوت المطر والرعد الخفيف للنوم العميق والاسترخاء التام',
-      url: 'https://player.vimeo.com/video/318908499',
-      duration: '8 ساعات'
-    }
-  ];
+  {
+    title: '🌊 شاطئ البحر - استرخاء',
+    description: 'أمواج البحر الهادئة للاسترخاء والتأمل',
+    url: 'https://player.vimeo.com/video/201789827',
+    duration: 'دقيقة'
+  },
+  {
+    title: '🌿 غابة خضراء - طبيعة هادئة',
+    description: 'مناظر طبيعية خضراء مع أصوات الطيور',
+    url: 'https://player.vimeo.com/video/347119567',
+    duration: 'دقيقتين'
+  },
+  {
+    title: '🏔️ جبال وسحاب - تأمل',
+    description: 'مناظر جبلية خلابة مع موسيقى هادئة',
+    url: 'https://player.vimeo.com/video/347130241',
+    duration: 'دقيقة'
+  },
+  {
+    title: '🌅 غروب الشمس - راحة نفسية',
+    description: 'منظر غروب الشمس الهادئ مع موسيقى هادئة',
+    url: 'https://player.vimeo.com/video/347119568',
+    duration: 'دقيقتين'
+  }
+];
   
   // ========== أرقام الدعم النفسي ==========
   const supportLines = [
