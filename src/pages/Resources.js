@@ -27,7 +27,7 @@ function Resources() {
     }
   ];
   
-  // ========== تمارين تنفس بدلاً من الفيديوهات ==========
+  // ========== تمارين تنفس ==========
   const breathingExercises = [
     {
       title: '🌬️ تمرين التنفس 4-7-8',
@@ -59,16 +59,22 @@ function Resources() {
     }
   ];
   
-  // ========== نصائح سريعة للصحة النفسية ==========
+  // ========== نصائح سريعة ==========
   const quickTips = [
     '🌟 خذي 5 دقائق يومياً للتنفس العميق',
     '📝 دوّني مشاعرك يومياً في مفكرة',
     '💧 اشربي كوب ماء عند الشعور بالتوتر',
     '🚶 امشي 10 دقائق يومياً في الهواء الطلق',
-    '😊 ابتسمي حتى لو كنتِ حزينة - الابتسامة تخدع الدماغ فيشعر بالسعادة',
-    '📱 ابتعدي عن الشاشات قبل النوم بساعة',
-    '🎧 استمعي لموسيقى هادئة عند الشعور بالتوتر'
+    '😊 ابتسمي حتى لو كنتِ حزينة - الابتسامة تخدع الدماغ فيشعر بالسعادة'
   ];
+  
+  // ========== فيديو واحد شغال ==========
+  const relaxingVideo = {
+    title: '🌿 تأمل وموسيقى هادئة للاسترخاء',
+    description: 'جلسة تأمل قصيرة مع موسيقى هادئة لتهدئة الأعصاب والاسترخاء',
+    url: 'https://www.youtube-nocookie.com/embed/inpok4MKVLM',
+    duration: '10 دقائق'
+  };
   
   // ========== أرقام الدعم النفسي ==========
   const supportLines = [
@@ -97,6 +103,16 @@ function Resources() {
             }`}
           >
             📝 مقالات
+          </button>
+          <button 
+            onClick={() => setActiveTab('video')} 
+            className={`px-6 py-3 rounded-xl font-bold transition duration-200 ${
+              activeTab === 'video' 
+                ? 'bg-purple-600 text-white shadow-lg' 
+                : 'bg-white text-gray-600 hover:bg-purple-100'
+            }`}
+          >
+            🎬 فيديو استرخاء
           </button>
           <button 
             onClick={() => setActiveTab('breathing')} 
@@ -150,6 +166,33 @@ function Resources() {
           </div>
         )}
         
+        {/* ========== قسم الفيديو الوحيد ========== */}
+        {activeTab === 'video' && (
+          <div className="bg-white rounded-2xl p-6 shadow-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="text-4xl">🌿</div>
+              <div>
+                <h3 className="text-2xl font-bold text-purple-700">{relaxingVideo.title}</h3>
+                <p className="text-gray-600">{relaxingVideo.description}</p>
+                <p className="text-sm text-gray-500 mt-1">⏱️ المدة: {relaxingVideo.duration}</p>
+              </div>
+            </div>
+            <div className="relative pb-[56.25%] h-0 rounded-lg overflow-hidden">
+              <iframe
+                src={relaxingVideo.url}
+                title={relaxingVideo.title}
+                className="absolute top-0 left-0 w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <p className="text-center text-gray-500 text-sm mt-4">
+              🎧 استخدمي سماعات الأذن للحصول على تجربة أفضل
+            </p>
+          </div>
+        )}
+        
         {/* ========== قسم تمارين التنفس ========== */}
         {activeTab === 'breathing' && (
           <div className="grid gap-6">
@@ -176,7 +219,6 @@ function Resources() {
                 </div>
                 <button 
                   onClick={() => {
-                    // مؤقت بسيط للتمرين
                     alert(`🧘 ابدئي تمرين ${exercise.title}\n\nاتبعي الخطوات: ${exercise.steps.join(' → ')}\n\n${exercise.duration}`);
                   }}
                   className="mt-4 w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition font-semibold"
